@@ -26,11 +26,13 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
+  
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'contact' => 'required|numeric',
             'gender' => 'required|in:male,female',
+            'street_no' => 'required|string|max:255',
             'street_address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'email' => 'required|email',
@@ -55,6 +57,7 @@ class ClientController extends Controller
             'last_name' => $validated['last_name'],
             'contact' => $validated['contact'],
             'gender' => $validated['gender'],
+            'street_no' => $validated['street_no'],
             'street_address' => $validated['street_address'],
             'city' => $validated['city'],
             'email' => $validated['email'],
@@ -64,7 +67,7 @@ class ClientController extends Controller
             'status' => $validated['status'],
         ]);
 
-       // Mail::to($client->email)->send(new ClientPasswordMail($client, $password));
+   
 
         return redirect()->route('client-view')->with('success', 'Client created successfully.');
     }
@@ -77,11 +80,13 @@ class ClientController extends Controller
 
     public function update(Request $request, $id)
     {
+ 
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'contact' => 'required|numeric',
             'gender' => 'required|in:male,female',
+            'street_no' => 'required|string|max:255',
             'street_address' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'email' => 'required|email',
@@ -99,6 +104,7 @@ class ClientController extends Controller
             'last_name' => $validated['last_name'],
             'contact' => $validated['contact'],
             'gender' => $validated['gender'],
+            'street_no' => $validated['street_no'],
             'street_address' => $validated['street_address'],
             'city' => $validated['city'],
             'email' => $validated['email'],
@@ -113,16 +119,17 @@ class ClientController extends Controller
 
     public function destroy($id)
     {
-        $client = Client::find($id);
 
-        if (!$client) {
-
-            return response()->json(['error' => 'Client not found'], 404);
-        }
-    
+        $client = Client::findOrFail($id);
         $client->delete();
 
-        return response()->json(['success' => 'Client deleted successfully']);
+        return redirect()->route('client-view')->with('success', 'Client Deleted successfully');
+    }
+
+    public function show($id)
+    {
+        $client = Client::findOrFail($id);
+        return response()->json($client);
     }
 
 }

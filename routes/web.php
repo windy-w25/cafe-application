@@ -33,7 +33,9 @@ Route::get('/client-add', [ClientController::class, 'add'])->name('client');
 Route::get('client-view', [ClientController::class, 'view'])->name('client-view');
 Route::get('client-create', [ClientController::class, 'create']);
 Route::post('client-store', [ClientController::class, 'store']);
-Route::get('/client-edit/{id}', [ClientController::class, 'edit']);
+Route::get('/client-edit/{id}', [ClientController::class, 'edit'])->name('client-edit');;
 Route::put('/client-update/{id}', [ClientController::class, 'update'])->name('client-update');
-Route::post('/client-delete/{id}', [ClientController::class, 'destroy'])->name('client.destroy');
+Route::post('/client-delete/{id}', [ClientController::class, 'destroy'])->name('client-delete');
+Route::get('/client-show/{id}', [ClientController::class, 'show'])->name('client-show');
+
 require __DIR__.'/auth.php';
