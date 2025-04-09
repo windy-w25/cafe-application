@@ -14,7 +14,6 @@ class ClientController extends Controller
 {
     public function add(Request $request)
     {
- 
         return view('client.client_add');
     }
 
@@ -57,26 +56,31 @@ class ClientController extends Controller
 
         ]);
 
-        $client = Client::create([
-            'first_name' => $validated['first_name'],
-            'last_name' => $validated['last_name'],
-            'contact' => $validated['contact'],
-            'gender' => $validated['gender'],
-            'street_no' => $validated['street_no'],
-            'street_address' => $validated['street_address'],
-            'city' => $validated['city'],
-            'email' => $validated['email'],
-            'dob_year' => $validated['dob_year'],
-            'dob_month' => $validated['dob_month'],
-            'dob_day' => $validated['dob_day'],
-            'status' => $validated['status'],
-        ]);
+       // dd($user->id);
+
+        if($user){
+            $client = Client::create([
+                'user_id' => $user->id,
+                'first_name' => $validated['first_name'],
+                'last_name' => $validated['last_name'],
+                'contact' => $validated['contact'],
+                'gender' => $validated['gender'],
+                'street_no' => $validated['street_no'],
+                'street_address' => $validated['street_address'],
+                'city' => $validated['city'],
+                'email' => $validated['email'],
+                'dob_year' => $validated['dob_year'],
+                'dob_month' => $validated['dob_month'],
+                'dob_day' => $validated['dob_day'],
+                'status' => $validated['status'],
+            ]);
+        }
 
         if($user && $client){
           Mail::to($client->email)->send(new ClientPasswordMail( $password));
           //Mail::to('windywijesinghe95@gmail.com')->send(new ClientPasswordMail( $password));
         }
-        return redirect()->route('client-view')->with('success', 'Client created successfully.');
+        return redirect()->route('client-view')->with('success', 'Client created successfully. The password has been sent to the user.');
     }
 
     public function edit($id)
