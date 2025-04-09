@@ -5,6 +5,8 @@
     <title>@yield('title', 'Dashboard')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <style>
         body {
             min-height: 100vh;
@@ -27,6 +29,14 @@
             overflow-y: auto;
         }
     </style>
+    <script>
+        setTimeout(function () {
+            $(".alert-danger").hide();
+        }, 5000);
+        setTimeout(function () {
+            $(".alert-success").hide();
+        }, 5000);
+    </script>
 </head>
 <body>
     <div class="sidebar d-flex flex-column p-3">
@@ -53,11 +63,8 @@
 
         @yield('content')
     </div>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @stack('scripts')

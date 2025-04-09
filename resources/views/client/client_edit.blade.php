@@ -16,8 +16,6 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <h4 class="text-center mb-4">EDIT CLIENT</h4>
-
-            <!-- Show all error messages -->
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul class="mb-0">
@@ -27,7 +25,7 @@
                     </ul>
                 </div>
             @endif
-
+            @if(!empty($client))
             <form action="{{ route('client-update', $client->id) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -126,6 +124,7 @@
                     <button type="submit" class="btn btn-dark shadow px-5">UPDATE</button>
                 </div>
             </form>
+            @endif
         </div>
     </div>
 </div>

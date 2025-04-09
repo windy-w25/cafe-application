@@ -100,8 +100,10 @@
 
                     <div class="col-md-6 d-flex flex-column">
                         <label class="form-label mb-2">Active/Inactive</label>
+                        <input type="hidden" name="status" value="inactive">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="status" value="active" {{ old('status') == 'active' ? 'checked' : '' }}>
+                            <input class="form-check-input" type="checkbox" name="status" value="active"
+                                {{ old('status', 'inactive') == 'active' ? 'checked' : '' }}>
                         </div>
                     </div>
                 </div>

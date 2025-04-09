@@ -20,7 +20,12 @@ class ClientController extends Controller
 
     public function view(Request $request)
     {
-        $clients = Client::all();
+
+        $searchTerm = $request->input('search');
+        $clients = Client::when($searchTerm, function($query, $searchTerm) {
+            return $query->where('first_name', 'like', '%'.$searchTerm.'%')
+                        ->orWhere('last_name', 'like', '%'.$searchTerm.'%');
+        })->get();
         return view('client.view', compact('clients'));
     }
 
@@ -67,8 +72,10 @@ class ClientController extends Controller
             'status' => $validated['status'],
         ]);
 
-   
-
+        if($user && $client){
+          Mail::to($client->email)->send(new ClientPasswordMail( $password));
+          //Mail::to('windywijesinghe95@gmail.com')->send(new ClientPasswordMail( $password));
+        }
         return redirect()->route('client-view')->with('success', 'Client created successfully.');
     }
 
@@ -80,7 +87,6 @@ class ClientController extends Controller
 
     public function update(Request $request, $id)
     {
- 
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',

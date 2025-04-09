@@ -13,41 +13,25 @@ class ClientPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $password;
+
     /**
      * Create a new message instance.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Client Password Mail',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @param string $password
      */
-    public function attachments(): array
+    public function __construct($password)
     {
-        return [];
+        $this->password = $password;
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->subject('Your Account Password')->view('emails.client_password')->with(['password' => $this->password]);
     }
 }
