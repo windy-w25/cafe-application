@@ -1,6 +1,8 @@
-Cafe prescription
+Cafe application
 Laravel 11 
 
-cd cafe app
+cd cafe application
+composer install
+php artisan migrate
 
 php artisan serve
